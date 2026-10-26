@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#161331">
+  <meta name="description" content="Smash Karts io - a fast and frantic 3D kart battle arena. Drive, drift, and blast your way to the top.">
+  <title>Smash Karts io</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="game" aria-label="Smash Karts arena"></canvas>
+
+    <div id="loading" class="loading">
+      <div class="loading-badge">SMASH KARTS</div>
+      <div class="loading-bar"><span></span></div>
+      <p>Warming up the engine...</p>
+    </div>
+
+    <div id="menu" class="menu screen">
+      <header class="menu-header">
+        <div class="mini-brand">
+          <span class="mini-brand-mark">SK</span>
+          <span class="mini-brand-name">SMASH KARTS <b>IO</b></span>
+        </div>
+        <div class="menu-header-actions">
+          <span class="live-pill"><i></i> LIVE ARENA</span>
+          <button id="menuSound" class="icon-button" type="button" aria-label="Toggle sound">
+            <svg class="icon-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h4l5 4v-13l-5 4H4Z"/><path d="M16 8.2a5 5 0 0 1 0 7.6M18.5 5.5a8.5 8.5 0 0 1 0 13"/></svg>
+            <svg class="icon-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h4l5 4v-13l-5 4H4Z"/><path d="m16.5 9 5 5m0-5-5 5"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="menu-main">
+        <section class="menu-copy">
+          <div class="eyebrow"><span></span> 8-PLAYER ARCADE MAYHEM</div>
+          <h1 class="logo" aria-label="Smash Karts io">
+            <span class="logo-smash">SMASH</span>
+            <span class="logo-bottom"><span class="logo-karts">KARTS</span><span class="logo-io">io</span></span>
+          </h1>
+          <p class="tagline">Buckle up. Blast off. <em>Be the last kart rolling.</em></p>
+
+          <div class="setup-card">
+            <div class="setup-head">
+              <span>YOUR DRIVER</span>
+              <span class="setup-note">Pick a ride</span>
+            </div>
+            <div class="name-row">
+              <div class="name-field">
+                <label for="playerName">CALLSIGN</label>
+                <input id="playerName" type="text" maxlength="12" autocomplete="off" spellcheck="false" value="ROOKIE">
+              </div>
+              <button id="randomName" class="dice-button" type="button" aria-label="Random callsign" title="Random callsign">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-4V3l-5 5 5 5v-4h4v8H4V9h4V5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/></svg>
+              </button>
+            </div>
+            <div class="swatches" id="swatches" role="group" aria-label="Kart color">
+              <button class="swatch selected" type="button" data-color="#ff4d7d" aria-label="Coral kart" style="--swatch:#ff4d7d"></button>
+              <button class="swatch" type="button" data-color="#ffd84d" aria-label="Yellow kart" style="--swatch:#ffd84d"></button>
+              <button class="swatch" type="button" data-color="#51e6a4" aria-label="Mint kart" style="--swatch:#51e6a4"></button>
+              <button class="swatch" type="button" data-color="#51c8ff" aria-label="Blue kart" style="--swatch:#51c8ff"></button>
+              <button class="swatch" type="button" data-color="#a77bff" aria-label="Purple kart" style="--swatch:#a77bff"></button>
+              <button class="swatch" type="button" data-color="#ff8b3d" aria-label="Orange kart" style="--swatch:#ff8b3d"></button>
+            </div>
+          </div>
+
+          <button id="playButton" class="play-button" type="button">
+            <span>PLAY NOW</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 9 7-9 7V5Z"/></svg>
+          </button>
+
+          <div class="menu-stats">
+            <div><b>8</b><span>KARTS</span></div>
+            <div><b>15</b><span>SMASHES TO WIN</span></div>
+            <div><b>150s</b><span>OF CHAOS</span></div>
+          </div>
+        </section>
+
+        <aside class="menu-side">
+          <div class="arena-card">
+            <div class="arena-card-top">
+              <span class="arena-kicker">TONIGHT'S ARENA</span>
+              <span class="arena-live"><i></i> OPEN</span>
+            </div>
+            <h2>NEON<br>JUNKYARD</h2>
+            <p>Four lanes. One smash tower.<br>Nowhere to hide.</p>
+            <div class="arena-tags"><span>FAST</span><span>BOUNCY</span><span>TURBO PADS</span></div>
+          </div>
+          <div class="tip-card">
+            <span class="tip-label">PRO TIP</span>
+            <p>Grab a gift crate to stack <b>rapid fire</b>, <b>triple shot</b>, or a <b>shield</b>.</p>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="menu-footer">
+        <div class="control-chips">
+          <span><kbd>WASD</kbd> drive</span>
+          <span><kbd>MOUSE</kbd> aim</span>
+          <span><kbd>CLICK</kbd> blast</span>
+        </div>
+        <span class="footer-note">Smash the competition. Watch your back.</span>
+      </footer>
+    </div>
+
+    <section id="hud" class="hud is-hidden" aria-label="Game heads-up display">
+      <div class="hud-top">
+        <div class="hud-left">
+          <div class="hud-logo"><span>SMASH</span> KARTS <b>io</b></div>
+          <div class="timer-block">
+            <span class="timer-label">TIME LEFT</span>
+            <strong id="timer">2:30</strong>
+          </div>
+        </div>
+
+        <div class="hud-center">
+          <div class="target-pill">FIRST TO <b>15</b> SMASHES</div>
+          <div id="playerScore" class="player-score"><span>YOUR SMASHES</span><b>0</b></div>
+        </div>
+
+        <div class="hud-right">
+          <div class="minimap-shell">
+            <canvas id="minimap" width="340" height="340" aria-label="Arena minimap"></canvas>
+            <span class="minimap-label">ARENA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="leaderboard-shell">
+        <div class="leaderboard-head"><span>SMASH BOARD</span><span>KO</span></div>
+        <ol id="leaderboard" class="leaderboard"></ol>
+      </div>
+
+      <div id="killfeed" class="killfeed" aria-live="polite"></div>
+
+      <div class="hud-bottom">
+        <div class="status-panel">
+          <div class="status-head"><span id="playerTag">YOU</span><span id="healthValue">100</span></div>
+          <div id="healthBar" class="health-bar"><i></i><i></i><i></i></div>
+          <div id="powerups" class="powerups"></div>
+        </div>
+        <div class="bottom-center">
+          <div id="boostMeter" class="boost-meter"><span>TURBO</span><i></i></div>
+          <div class="control-hint">
+            <span><kbd>WASD</kbd> DRIVE</span>
+            <span><kbd>CLICK</kbd> BLAST</span>
+            <span><kbd>ESC</kbd> PAUSE</span>
+          </div>
+        </div>
+        <div class="ammo-panel">
+          <span class="ammo-label">CANNON</span>
+          <div class="ammo-icon">
+            <svg viewBox="0 0 48 24" aria-hidden="true"><path d="M4 10h24V5h12l4 4v6H28v4H4v-9Z"/><circle cx="11" cy="21" r="3"/><circle cx="25" cy="21" r="3"/></svg>
+          </div>
+          <span id="weaponName" class="weapon-name">BLASTER</span>
+        </div>
+      </div>
+
+      <div id="crosshair" class="crosshair" aria-hidden="true">
+        <i class="crosshair-ring"></i>
+        <i class="crosshair-dot"></i>
+        <i class="crosshair-hit"></i>
+      </div>
+      <div id="damageFlash" class="damage-flash"></div>
+      <div id="boostFlash" class="boost-flash"></div>
+      <div id="smashText" class="smash-text"></div>
+
+      <div id="respawn" class="respawn is-hidden">
+        <span>YOU GOT SMASHED</span>
+        <strong id="respawnCount">3</strong>
+        <small>Respawning...</small>
+      </div>
+    </section>
+
+    <div id="mobileControls" class="mobile-controls is-hidden" aria-hidden="true">
+      <div id="moveStick" class="stick-shell move-stick">
+        <div class="stick-base"></div>
+        <div class="stick-knob"></div>
+        <span class="stick-label">DRIVE</span>
+      </div>
+      <div id="aimStick" class="stick-shell aim-stick">
+        <div class="stick-base"></div>
+        <div class="stick-knob"></div>
+        <svg class="stick-cross" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 8v32M8 24h32"/><circle cx="24" cy="24" r="15"/></svg>
+        <span class="stick-label">AIM + FIRE</span>
+      </div>
+    </div>
+
+    <div id="pause" class="modal screen is-hidden">
+      <div class="modal-card pause-card">
+        <span class="modal-kicker">ENGINE IDLING</span>
+        <h2>PAUSED</h2>
+        <p>Take a breather. The arena will wait.</p>
+        <div class="modal-actions">
+          <button id="resumeButton" class="play-button compact" type="button"><span>RESUME</span></button>
+          <button id="quitButton" class="ghost-button" type="button">QUIT TO MENU</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="results" class="modal screen is-hidden">
+      <div class="modal-card results-card">
+        <span id="resultKicker" class="modal-kicker">MATCH COMPLETE</span>
+        <h2 id="resultTitle">VICTORY!</h2>
+        <p id="resultSubtitle">You wrecked the competition.</p>
+        <div class="result-highlight">
+          <span>YOUR SMASHES</span>
+          <strong id="resultScore">0</strong>
+        </div>
+        <ol id="finalStandings" class="final-standings"></ol>
+        <div class="modal-actions">
+          <button id="againButton" class="play-button compact" type="button"><span>PLAY AGAIN</span></button>
+          <button id="menuButton" class="ghost-button" type="button">MAIN MENU</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="build-stamp">SMASH KARTS IO <span>v1.0</span></div>
+  </div>
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>
