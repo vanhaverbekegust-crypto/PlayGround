@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#09071a" />
+    <meta name="description" content="Smash Karts IO — a fast, free-for-all 3D kart battle arena. Pick a kart, grab boost, and blast your way to the top of the leaderboard." />
+    <title>SMASH KARTS IO — Kart Battle Arena</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23120f2e'/%3E%3Cpath d='M18 66h64l-9 15H27z' fill='%23ffd23f'/%3E%3Crect x='31' y='38' width='38' height='24' rx='9' fill='%23ff5a5f'/%3E%3Ccircle cx='34' cy='76' r='9' fill='%23111'/%3E%3Ccircle cx='66' cy='76' r='9' fill='%23111'/%3E%3Ccircle cx='34' cy='76' r='3.5' fill='%23fff'/%3E%3Ccircle cx='66' cy='76' r='3.5' fill='%23fff'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div id="app">
+      <div id="game-root" aria-label="Smash Karts IO game canvas"></div>
+      <div id="vignette"></div>
+
+      <div id="hud" class="hidden" aria-live="polite">
+        <div class="hud-top">
+          <div class="stat-panel glass">
+            <div class="stat-row">
+              <div class="stat-icon health-icon">&#10010;</div>
+              <div class="stat-main">
+                <div class="bar-label"><span>ARMOR</span><span id="health-text">100</span></div>
+                <div class="bar"><div id="health-fill" class="bar-fill health-fill"></div></div>
+              </div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-icon boost-icon">&#9889;</div>
+              <div class="stat-main">
+                <div class="bar-label"><span>BOOST</span><span id="boost-text">100</span></div>
+                <div class="bar"><div id="boost-fill" class="bar-fill boost-fill"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timer-wrap">
+            <div id="timer" class="timer">2:00</div>
+            <div id="timer-label" class="timer-label">FREE FOR ALL</div>
+            <div id="kill-feed" class="kill-feed"></div>
+          </div>
+
+          <div class="score-panel glass">
+            <div class="score-title"><span>LEADERBOARD</span><span id="alive-count">8 ALIVE</span></div>
+            <ol id="scoreboard" class="scoreboard"></ol>
+          </div>
+        </div>
+
+        <div class="hud-bottom">
+          <div class="minimap-wrap glass">
+            <canvas id="minimap" width="220" height="220"></canvas>
+            <div class="minimap-label">ARENA</div>
+          </div>
+
+          <div class="speed-wrap">
+            <div id="speed-value" class="speed-value">0</div>
+            <div class="speed-unit">KM/H</div>
+            <div id="weapon-state" class="weapon-state">CANNON READY</div>
+          </div>
+        </div>
+
+        <div id="crosshair" class="crosshair">
+          <span class="ch-dot"></span>
+          <span class="ch-ring"></span>
+          <span class="ch-tick t1"></span>
+          <span class="ch-tick t2"></span>
+          <span class="ch-tick t3"></span>
+          <span class="ch-tick t4"></span>
+        </div>
+        <div id="hitmarker" class="hitmarker"><span></span><span></span><span></span><span></span></div>
+        <div id="countdown" class="countdown hidden">3</div>
+        <div id="announce" class="announce hidden"></div>
+        <div id="damage-flash" class="damage-flash"></div>
+      </div>
+
+      <section id="start-screen" class="screen start-screen">
+        <div class="bg-grid"></div>
+        <div class="start-inner">
+          <div class="brand">
+            <div class="brand-kicker">FREE · ONLINE · MAYHEM</div>
+            <h1 class="logo">
+              <span class="logo-smash">SMASH</span>
+              <span class="logo-row"><span class="logo-karts">KARTS</span><span class="io-badge">IO</span></span>
+              <span class="logo-glow" aria-hidden="true">SMASH<br />KARTS</span>
+            </h1>
+            <p class="tagline">Eight karts enter. One champion leaves.</p>
+          </div>
+
+          <div class="start-card glass">
+            <div class="pick-head">
+              <span>PICK YOUR KART</span>
+              <span id="pick-name" class="pick-name">VOLT</span>
+            </div>
+            <div id="color-picker" class="color-picker"></div>
+
+            <button id="play-button" class="play-button">
+              <span class="play-label">PLAY NOW</span>
+              <span class="play-glow"></span>
+            </button>
+
+            <div class="controls-grid">
+              <div class="ctrl"><div class="keys"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div><span>DRIVE</span></div>
+              <div class="ctrl"><div class="keys"><kbd>MOUSE</kbd></div><span>AIM</span></div>
+              <div class="ctrl"><div class="keys"><kbd>CLICK</kbd><kbd>SPACE</kbd></div><span>FIRE</span></div>
+              <div class="ctrl"><div class="keys"><kbd>SHIFT</kbd></div><span>BOOST</span></div>
+            </div>
+            <div class="start-foot">
+              <span class="online-dot"></span>
+              <span id="lobby-text">8 karts ready</span>
+              <button id="sound-toggle" class="sound-toggle" aria-label="Toggle sound">SOUND ON</button>
+            </div>
+          </div>
+
+          <div class="start-marquee" aria-hidden="true">
+            <div class="marquee-track">
+              <span>SMASH</span><span>BOOST</span><span>BLAST</span><span>REPEAT</span><span>SMASH</span><span>BOOST</span><span>BLAST</span><span>REPEAT</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="end-screen" class="screen end-screen hidden">
+        <div class="end-card glass">
+          <div id="end-kicker" class="end-kicker">MATCH COMPLETE</div>
+          <h2 id="end-title" class="end-title">VICTORY</h2>
+          <p id="end-sub" class="end-sub">You dominated the arena.</p>
+          <div class="end-stats">
+            <div class="end-stat"><span id="end-place">1ST</span><small>PLACE</small></div>
+            <div class="end-stat"><span id="end-kills">0</span><small>SMASHES</small></div>
+            <div class="end-stat"><span id="end-deaths">0</span><small>WRECKS</small></div>
+          </div>
+          <ol id="end-board" class="end-board"></ol>
+          <button id="again-button" class="play-button small"><span class="play-label">PLAY AGAIN</span><span class="play-glow"></span></button>
+        </div>
+      </section>
+
+      <div id="touch-controls" class="touch-controls hidden">
+        <div id="joystick" class="joystick"><div id="joystick-knob" class="joystick-knob"></div></div>
+        <button id="touch-boost" class="touch-btn touch-boost" aria-label="Boost">&#9889;</button>
+        <button id="touch-fire" class="touch-btn touch-fire" aria-label="Fire">FIRE</button>
+      </div>
+
+      <button id="pause-button" class="pause-button hidden" aria-label="Pause">II</button>
+      <div id="pause-screen" class="screen pause-screen hidden">
+        <div class="pause-card glass">
+          <h2>PAUSED</h2>
+          <p>Engine idle. The arena waits.</p>
+          <button id="resume-button" class="play-button small"><span class="play-label">RESUME</span><span class="play-glow"></span></button>
+          <button id="quit-button" class="text-button">QUIT TO MENU</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
